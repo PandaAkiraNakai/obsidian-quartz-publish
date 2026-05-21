@@ -1,0 +1,28 @@
+# Compose listo para Coolify (buildpack: Docker Compose) y para `docker compose up` local.
+#
+# En Coolify: el magic env SERVICE_FQDN_SITE permite que Coolify resuelva el dominio
+# del servicio y aplique automáticamente las labels de Traefik + cert Let's Encrypt
+# a partir del dominio que se configure en la UI.
+#
+# Localmente: se expone el puerto 8080 → http://localhost:8080
+
+services:
+  site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        QUARTZ_REF: v4
+    restart: unless-stopped
+    environment:
+      - SERVICE_FQDN_SITE=/
+    ports:
+      - "8080:80"
+    expose:
+      - "80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1/ > /dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

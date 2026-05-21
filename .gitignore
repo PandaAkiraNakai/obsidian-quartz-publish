@@ -1,0 +1,22 @@
+# Claude Code local settings
+.claude/
+
+# Estado de workspace de Obsidian (cambia con cada sesion)
+content/.obsidian/workspace.json
+content/.obsidian/workspace-mobile.json
+content/.obsidian/workspaces.json
+
+# Build artifacts si se ejecuta Quartz directamente
+public/
+.quartz-cache/
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Env locales
+.env
+.env.local

@@ -1,0 +1,696 @@
+@use "./base.scss";
+@use "./variables.scss" as *;
+
+// =====================================================================
+// Tema custom — mobile-first, cards y pills sobrios.
+// Editar las variables siguientes para ajustar el acento y los radios.
+// =====================================================================
+
+:root {
+  --accent: #c97b3b;
+  --accent-soft: #c97b3b22;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 12px rgba(15, 23, 42, 0.04);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --transition: 0.18s ease;
+  --max-content: 78ch;
+}
+
+[saved-theme="dark"] {
+  --accent: #e8a368;
+  --accent-soft: #e8a36822;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+// ---------- Tipografia y rendering ----------
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  letter-spacing: -0.005em;
+}
+
+p, li, td, th {
+  line-height: 1.7;
+}
+
+article {
+  max-width: var(--max-content);
+
+  & > h1:first-of-type,
+  & > h1.article-title {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-top: 0;
+    background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  & h2 {
+    letter-spacing: -0.015em;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--lightgray);
+  }
+
+  & h3 {
+    letter-spacing: -0.01em;
+    color: var(--secondary);
+  }
+}
+
+// Blockquote inicial destacado
+article > blockquote:first-of-type,
+article > p:first-of-type + blockquote {
+  font-size: 1.08rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--secondary) 8%, transparent),
+    color-mix(in srgb, var(--tertiary) 6%, transparent)
+  );
+  border-left: 4px solid var(--secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+// ---------- Enlaces ----------
+
+a.internal {
+  background-color: var(--highlight);
+  border-radius: var(--radius-sm);
+  padding: 0.05rem 0.32rem;
+  transition: background-color var(--transition), color var(--transition),
+    box-shadow var(--transition);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--secondary) 18%, transparent);
+    color: var(--secondary);
+  }
+}
+
+a.external {
+  border-bottom: 1px dashed color-mix(in srgb, var(--secondary) 50%, transparent);
+  transition: border-color var(--transition), color var(--transition);
+
+  &:hover {
+    border-bottom-color: var(--tertiary);
+  }
+}
+
+// ---------- Tablas ----------
+
+.table-container {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--lightgray);
+  background: var(--light);
+  -webkit-overflow-scrolling: touch;
+  margin: 1.25rem 0;
+
+  & > table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+    & th {
+      background: color-mix(in srgb, var(--secondary) 6%, var(--light));
+      font-family: var(--headerFont);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      border-bottom: 2px solid var(--secondary);
+    }
+
+    & tr {
+      transition: background var(--transition);
+      &:hover {
+        background: color-mix(in srgb, var(--secondary) 4%, transparent);
+      }
+    }
+
+    & tbody tr:nth-child(even) {
+      background: color-mix(in srgb, var(--lightgray) 18%, transparent);
+    }
+
+    & tbody tr:hover {
+      background: color-mix(in srgb, var(--secondary) 7%, transparent) !important;
+    }
+
+    & td:first-child {
+      font-weight: 500;
+      color: var(--darkgray);
+    }
+  }
+}
+
+@media all and ($mobile) {
+  .table-container > table {
+    font-size: 0.92rem;
+
+    & th, & td {
+      padding: 0.5rem 0.6rem;
+      min-width: 0;
+    }
+  }
+}
+
+// ---------- Code blocks ----------
+
+pre {
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--lightgray) 35%, var(--light));
+  box-shadow: var(--shadow-sm);
+}
+
+code {
+  background: color-mix(in srgb, var(--lightgray) 65%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gray) 25%, transparent);
+}
+
+// ---------- Listas ----------
+
+article ul li::marker {
+  color: var(--tertiary);
+}
+article ol li::marker {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+// ---------- Imagenes ----------
+
+article img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+// =====================================================================
+// LAYOUT GLOBAL — mobile-first
+// =====================================================================
+
+@media all and ($mobile) {
+  .page > #quartz-body {
+    & .sidebar.left {
+      padding-top: 1rem !important;
+      padding-bottom: 0.5rem !important;
+      gap: 0.5rem !important;
+
+      // Sticky search en movil: pegado arriba con blur
+      position: sticky !important;
+      top: 0;
+      z-index: 50;
+      background: color-mix(in srgb, var(--light) 88%, transparent);
+      backdrop-filter: saturate(140%) blur(10px);
+      -webkit-backdrop-filter: saturate(140%) blur(10px);
+      border-bottom: 1px solid color-mix(in srgb, var(--lightgray) 70%, transparent);
+    }
+
+    & .page-header {
+      margin-top: 0.5rem !important;
+    }
+
+    & .center {
+      padding: 0 0.25rem;
+    }
+
+    & article {
+      & > h1.article-title,
+      & > h1:first-of-type {
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+}
+
+@media all and ($tablet) {
+  .page > #quartz-body .sidebar.left {
+    padding-top: 3rem;
+  }
+}
+
+@media all and ($desktop) {
+  .page > #quartz-body .center > article {
+    padding: 0 0.5rem;
+  }
+}
+
+// =====================================================================
+// PAGE TITLE (logo del sitio)
+// =====================================================================
+
+.page-title {
+  font-family: var(--headerFont);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.35rem;
+  margin: 0;
+  background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  @media all and ($mobile) {
+    font-size: 1.1rem;
+  }
+}
+
+// =====================================================================
+// SEARCH
+// =====================================================================
+
+.search {
+  & > #search-button {
+    background: var(--light);
+    border: 1px solid var(--lightgray);
+    border-radius: var(--radius-md);
+    padding: 0.45rem 0.7rem;
+    transition: border-color var(--transition), box-shadow var(--transition),
+      background var(--transition);
+    min-height: 40px;
+
+    &:hover {
+      border-color: var(--secondary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    & > p {
+      color: var(--gray);
+      font-weight: 500;
+    }
+  }
+}
+
+// =====================================================================
+// DARKMODE / READER toggles
+// =====================================================================
+
+.darkmode, .readermode {
+  & > svg, & > .toggle, & button {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    transition: background var(--transition), transform var(--transition);
+
+    &:hover {
+      background: color-mix(in srgb, var(--secondary) 12%, transparent);
+      transform: scale(1.05);
+    }
+  }
+}
+
+// =====================================================================
+// EXPLORER
+// =====================================================================
+
+.explorer {
+  & button#explorer {
+    font-family: var(--headerFont);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    color: var(--darkgray);
+    transition: color var(--transition);
+    padding: 0.4rem 0;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  & ul#explorer-content {
+    li > a {
+      transition: color var(--transition), background var(--transition);
+      border-radius: var(--radius-sm);
+      padding: 0.15rem 0.4rem;
+      display: inline-block;
+
+      &:hover {
+        background: color-mix(in srgb, var(--secondary) 10%, transparent);
+        color: var(--secondary);
+      }
+    }
+
+    .folder-outer .folder-container .folder-icon {
+      color: var(--tertiary);
+    }
+  }
+}
+
+// =====================================================================
+// BREADCRUMBS
+// =====================================================================
+
+.breadcrumb-container {
+  font-size: 0.85rem;
+  color: var(--gray);
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  & a {
+    color: var(--gray);
+    font-weight: 500;
+    transition: color var(--transition);
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+
+  & .breadcrumb-element:last-child a {
+    color: var(--darkgray);
+  }
+}
+
+// =====================================================================
+// CONTENT META
+// =====================================================================
+
+.content-meta {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-style: normal;
+  margin-bottom: 0.5rem;
+}
+
+// =====================================================================
+// TAGS
+// =====================================================================
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0.5rem 0 1.5rem 0;
+  list-style: none;
+
+  & li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  & a.internal.tag-link {
+    font-size: 0.78rem;
+    font-weight: 500;
+    background: color-mix(in srgb, var(--tertiary) 15%, transparent);
+    color: var(--secondary);
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--tertiary) 25%, transparent);
+    transition: all var(--transition);
+
+    &::before {
+      content: "#";
+      opacity: 0.55;
+      margin-right: 0.1rem;
+    }
+
+    &:hover {
+      background: var(--secondary);
+      color: var(--light);
+      border-color: var(--secondary);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}
+
+// =====================================================================
+// TABLA DE CONTENIDOS (right sidebar, desktop)
+// =====================================================================
+
+.toc {
+  & > h3, & > .toc-title {
+    font-family: var(--headerFont);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.5rem;
+  }
+
+  & ul {
+    list-style: none;
+    padding-left: 0.5rem;
+    border-left: 1px solid var(--lightgray);
+
+    & li {
+      padding: 0.18rem 0;
+      transition: border-color var(--transition);
+
+      & a {
+        font-size: 0.88rem;
+        color: var(--darkgray);
+        opacity: 0.75;
+        transition: opacity var(--transition), color var(--transition);
+        font-weight: 400;
+
+        &:hover {
+          opacity: 1;
+          color: var(--secondary);
+        }
+      }
+    }
+  }
+}
+
+// =====================================================================
+// BACKLINKS / GRAPH
+// =====================================================================
+
+.backlinks, .graph {
+  & > h3 {
+    font-family: var(--headerFont);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 0.6rem;
+  }
+}
+
+.backlinks .backlink {
+  background: color-mix(in srgb, var(--lightgray) 30%, transparent);
+  padding: 0.5rem 0.7rem;
+  border-radius: var(--radius-sm);
+  margin: 0.4rem 0;
+  font-size: 0.88rem;
+  border-left: 2px solid var(--tertiary);
+  transition: background var(--transition), border-color var(--transition);
+
+  &:hover {
+    background: color-mix(in srgb, var(--secondary) 8%, transparent);
+    border-left-color: var(--secondary);
+  }
+}
+
+.graph .graph-outer {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--lightgray);
+  background: color-mix(in srgb, var(--light) 60%, var(--lightgray));
+  padding: 0.4rem;
+}
+
+.graph canvas {
+  border-radius: var(--radius-md);
+}
+
+// =====================================================================
+// CALLOUTS
+// =====================================================================
+
+.callout {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border-left-width: 4px;
+  padding: 0.85rem 1rem;
+  margin: 1.5rem 0;
+
+  & > .callout-title {
+    & .callout-icon {
+      flex-shrink: 0;
+    }
+
+    & .callout-title-inner {
+      font-family: var(--headerFont);
+      font-weight: 600;
+    }
+  }
+}
+
+// =====================================================================
+// LIST PAGE / FOLDER PAGE — cards
+// =====================================================================
+
+.popover-hint,
+ul.section-ul {
+  list-style: none;
+  padding-left: 0;
+
+  & > li.section-li {
+    margin: 0.5rem 0;
+    padding: 0.85rem 1rem;
+    background: var(--light);
+    border: 1px solid var(--lightgray);
+    border-radius: var(--radius-md);
+    transition: transform var(--transition), box-shadow var(--transition),
+      border-color var(--transition);
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      border-color: color-mix(in srgb, var(--secondary) 35%, var(--lightgray));
+    }
+
+    & .section {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.6rem;
+      align-items: baseline;
+
+      @media all and ($mobile) {
+        grid-template-columns: 1fr;
+      }
+
+      & .meta {
+        color: var(--gray);
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      & h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        & a {
+          color: var(--dark);
+          background: transparent;
+          padding: 0;
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          &:hover {
+            color: var(--secondary);
+          }
+        }
+      }
+
+      & p {
+        font-size: 0.92rem;
+        color: var(--darkgray);
+        opacity: 0.85;
+        margin: 0.35rem 0 0 0;
+        line-height: 1.55;
+        grid-column: 1 / -1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+// =====================================================================
+// FOOTER
+// =====================================================================
+
+footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--lightgray);
+  font-size: 0.85rem;
+  color: var(--gray);
+
+  & p, & ul {
+    margin: 0.4rem 0;
+  }
+
+  & ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+    list-style: none;
+    padding: 0;
+  }
+}
+
+// =====================================================================
+// PRINT
+// =====================================================================
+
+@media print {
+  .sidebar, .toc, .graph, .backlinks, .breadcrumb-container,
+  .content-meta, footer {
+    display: none !important;
+  }
+  article {
+    max-width: 100% !important;
+  }
+  a {
+    color: black !important;
+    text-decoration: none !important;
+  }
+}
+
+// =====================================================================
+// SCROLLBAR
+// =====================================================================
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--gray) 50%, transparent);
+  border-radius: 999px;
+  &:hover {
+    background: var(--gray);
+  }
+}
+
+// =====================================================================
+// REDUCED MOTION
+// =====================================================================
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// =====================================================================
+// SELECCION DE TEXTO
+// =====================================================================
+
+::selection {
+  background: color-mix(in srgb, var(--secondary) 35%, transparent);
+  color: var(--dark);
+}
