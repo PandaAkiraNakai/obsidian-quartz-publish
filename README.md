@@ -138,3 +138,7 @@ docker build --build-arg QUARTZ_REF=<sha-o-tag> -t mysite .
 ## Licencia
 
 MIT. Ver [LICENSE](LICENSE).
+
+<!-- profile-excerpt -->
+**Template público** extraído del rig anterior: publica tu vault Obsidian como sitio estático con **Quartz v4 + nginx + Docker**, listo para Coolify u otra plataforma docker-compose. Build multi-stage (Quartz se clona en build, el repo del usuario queda chico), magic env `SERVICE_FQDN_SITE` para auto-domain, contenido de ejemplo incluido. `// use this template · plug-in tu vault · burn`
+<!-- /profile-excerpt -->
